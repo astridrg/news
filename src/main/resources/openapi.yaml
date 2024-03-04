@@ -1,0 +1,315 @@
+openapi: 3.0.3
+info:
+  title: Swagger technical test
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: news
+    description: Everything about news
+    externalDocs:
+      description: Find out more about news
+      url: http://swagger.io
+paths:
+  /news:
+    post:
+      tags:
+        - news
+      summary: Create a news in DataBase
+      description: Add a news
+      operationId: addNews
+      parameters:
+        - name: title
+          in: query
+          description: title needs to be update by title
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a news in DataBase
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/News'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - news
+      summary: Get all news
+      description: Get a news list
+      operationId: getListNews
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+
+  /news/{id}:
+    get:
+      tags:
+        - news
+      summary: Find news by ID
+      description: Returns a single news
+      operationId: getNewsById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+    delete:
+      tags:
+        - news
+      summary: delete news by id
+      operationId: deleteNewsById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+    put:
+      tags:
+        - news
+      summary: Find news by ID
+      description: Returns a single news
+      operationId: updateNews
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: update a news in DataBase
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsRequestUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+  /news/title/{title}:
+    get:
+      tags:
+        - news
+      summary: Find news by title
+      description: Returns a single news
+      operationId: getNewsByTitle
+      parameters:
+        - name: title
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+        '400':
+          description: Invalid input
+
+
+components:
+  schemas:
+    News:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ultimas noticias
+        url:
+          type: string
+          example: https://spacenews.com/legislation-would-make-spaceports-eligible-for-tax-exempt-bonds/
+        imageUrl:
+          type: string
+          example: https://i0.wp.com/spacenews.com/wp-content/uploads/2022/01/capecanaveral-fromspace.jpg
+        newsSite:
+          type: string
+          example: SpaceNews
+        summary:
+          type: string
+          example: Legislation introduced in Congress Feb. 28 would give spaceports the same ability as airports and seaports to issue tax-exempt bonds
+        featured:
+          type: boolean
+          example: true
+        events:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/Events'
+        launches:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/Launches'
+    Events:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+    Launches:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+    NewsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 3ae2c133-4c92-4602-8eb2-934bb90cd86f
+        title:
+          type: string
+          example: Ultimas noticias
+        url:
+          type: string
+          example: https://spacenews.com/legislation-would-make-spaceports-eligible-for-tax-exempt-bonds/
+        imageUrl:
+          type: string
+          example: https://i0.wp.com/spacenews.com/wp-content/uploads/2022/01/capecanaveral-fromspace.jpg
+        newsSite:
+          type: string
+          example: SpaceNews
+        summary:
+          type: string
+          example: Legislation introduced in Congress Feb. 28 would give spaceports the same ability as airports and seaports to issue tax-exempt bonds
+        publishedAt:
+          type: string
+          example: 2024-03-03T22:14:45
+        updatedAt:
+          type: string
+          example: 2024-03-03T22:14:45
+        featured:
+          type: boolean
+          example: true
+        events:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/EventsResponse'
+        launches:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/LaunchesResponse'
+    EventsResponse:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+        eventId:
+          type: string
+          example: 3ae2c133-4c92-4602-8eb2-934bb90cd86f
+    LaunchesResponse:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+        launchId:
+          type: string
+          example: 3ae2c133-4c92-4602-8eb2-934bb90cd86f
+    NewsRequestUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ultimas noticias
+        url:
+          type: string
+          example: https://spacenews.com/legislation-would-make-spaceports-eligible-for-tax-exempt-bonds/
+        imageUrl:
+          type: string
+          example: https://i0.wp.com/spacenews.com/wp-content/uploads/2022/01/capecanaveral-fromspace.jpg
+        newsSite:
+          type: string
+          example: SpaceNews
+        summary:
+          type: string
+          example: Legislation introduced in Congress Feb. 28 would give spaceports the same ability as airports and seaports to issue tax-exempt bonds
+        featured:
+          type: boolean
+          example: true
+        events:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/EventsRequestUpdate'
+        launches:
+          type: array
+          description: Acces element.
+          items:
+            $ref: '#/components/schemas/LaunchesRequestUpdate'
+    EventsRequestUpdate:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+        eventId:
+          type: string
+          example: 3ae2c133-4c92-4602-8eb2-934bb90cd86f
+    LaunchesRequestUpdate:
+      type: object
+      properties:
+        provider:
+          type: string
+          example: test
+        launchId:
+          type: string
+          example: 3ae2c133-4c92-4602-8eb2-934bb90cd86f

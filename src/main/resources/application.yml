@@ -15,16 +15,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  security:
-    user:
-      password: password
-
 
 server:
   port: 8080
-
-regular-expression:
-  password-reg: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>.]).{8,20}$
-
 
 
